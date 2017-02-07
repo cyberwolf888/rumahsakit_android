@@ -27,7 +27,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".DetailHospitalActivity"></activity>
+        <activity android:name=".DetailHospitalActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

@@ -178,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_account) {
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }

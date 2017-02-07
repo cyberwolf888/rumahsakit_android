@@ -221,7 +221,6 @@ public class DetailHospitalActivity extends AppCompatActivity {
         if (id == R.id.action_account) {
             Intent i = new Intent(DetailHospitalActivity.this, LoginActivity.class);
             startActivity(i);
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }
