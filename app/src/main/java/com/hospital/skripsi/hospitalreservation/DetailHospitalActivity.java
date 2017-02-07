@@ -3,26 +3,30 @@ package com.hospital.skripsi.hospitalreservation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.hospital.skripsi.hospitalreservation.adapter.HospitalAdapter;
-import com.hospital.skripsi.hospitalreservation.models.Hospital;
+import com.hospital.skripsi.hospitalreservation.adapter.RoomAdapter;
+import com.hospital.skripsi.hospitalreservation.models.Room;
 import com.hospital.skripsi.hospitalreservation.utility.RequestServer;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -30,34 +34,76 @@ import com.koushikdutta.ion.Ion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class DetailHospitalActivity extends AppCompatActivity {
 
-    private List<Hospital> hospital;
+    private String id_hospital;
+    private String hospital_name;
+    private String telp;
+    private String email;
+    private String image;
+    private String thumb_image;
+    private String description;
+    private String address;
+    private String price;
+    private String label_price;
+
+    private View mProgressView;
+    private List<Room> rooms;
     protected RecyclerView mRecyclerView;
-    protected HospitalAdapter mAdapter;
+    protected RoomAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     public JsonArray data;
 
-    private View mProgressView;
-    private SwipeRefreshLayout mMainView;
+    private ImageView imageHospital;
+    private TextView tvHospitalName,tvDescription,tvAdress,tvTelp,tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        id_hospital = getIntent().getStringExtra("id_hospital");
+        hospital_name = getIntent().getStringExtra("hospital_name");
+        telp = getIntent().getStringExtra("telp");
+        email = getIntent().getStringExtra("email");
+        image = getIntent().getStringExtra("image");
+        thumb_image = getIntent().getStringExtra("thumb_image");
+        description = getIntent().getStringExtra("description");
+        address = getIntent().getStringExtra("address");
+        price = getIntent().getStringExtra("price");
+        label_price = getIntent().getStringExtra("label_price");
+        setContentView(R.layout.activity_detail_hospital);
 
-        mMainView = (SwipeRefreshLayout) findViewById(R.id.main_view);
+        getSupportActionBar().setTitle(hospital_name);
+
         mProgressView = findViewById(R.id.main_progress);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rvRoom);
+        mLayoutManager = new LinearLayoutManager(DetailHospitalActivity.this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rvHospital);
-        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        imageHospital = (ImageView) findViewById(R.id.imageHospital);
+        tvHospitalName = (TextView) findViewById(R.id.tvHospitalName);
+        tvDescription = (TextView) findViewById(R.id.tvDescription);
+        tvAdress = (TextView) findViewById(R.id.tvAdress);
+        tvTelp = (TextView) findViewById(R.id.tvTelp);
+        tvEmail = (TextView) findViewById(R.id.tvEmail);
 
-        mMainView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        Ion.with(this).load(image).withBitmap().asBitmap().setCallback(new FutureCallback<Bitmap>() {
             @Override
-            public void onRefresh() {
-                getData();
+            public void onCompleted(Exception e, Bitmap result) {
+                imageHospital.setImageBitmap(result);
+                imageHospital.getLayoutParams().width = 1280;
             }
         });
+
+        tvHospitalName.setText(hospital_name);
+        tvDescription.setText(description);
+        tvAdress.setText(address);
+        tvTelp.setText(telp);
+        tvEmail.setText(email);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -67,18 +113,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData(){
-        mMainView.setRefreshing(false);
         if(isNetworkAvailable()){
             showProgress(true);
 
-            hospital = new ArrayList<>();
+            rooms = new ArrayList<>();
             data = new JsonArray();
-            String url = new RequestServer().getServer_url() + "home";
+            String url = new RequestServer().getServer_url() + "getRoom";
 
             JsonObject jsonReq = new JsonObject();
-            jsonReq.addProperty("home", true);
+            jsonReq.addProperty("hospital_id", id_hospital);
 
-            Ion.with(MainActivity.this)
+            Ion.with(DetailHospitalActivity.this)
                     .load(url)
                     .setJsonObjectBody(jsonReq)
                     .asJsonObject()
@@ -92,21 +137,18 @@ public class MainActivity extends AppCompatActivity {
                                 if(!objData.get("image").isJsonNull()){
                                     photo = objData.get("image").getAsString();
                                 }
-                                hospital.add(new Hospital(
+                                rooms.add(new Room(
                                         objData.get("id").getAsString(),
                                         objData.get("name").getAsString(),
-                                        objData.get("telp").getAsString(),
-                                        objData.get("email").getAsString(),
                                         objData.get("image").getAsString(),
-                                        objData.get("thumb_image").getAsString(),
-                                        objData.get("description").getAsString(),
-                                        objData.get("address").getAsString(),
-                                        objData.get("price").getAsString(),
-                                        objData.get("label_price").getAsString()
+                                        objData.get("total").getAsString(),
+                                        objData.get("label_price").getAsString(),
+                                        objData.get("description").getAsString()
                                 ));
-                            }
 
-                            mAdapter = new HospitalAdapter(MainActivity.this, hospital);
+                            }
+                            //Log.d("rooms",">"+data);
+                            mAdapter = new RoomAdapter(DetailHospitalActivity.this,rooms);
                             mRecyclerView.setAdapter(mAdapter);
                             mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -129,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+
     /**
      * Shows the progress UI and hides the main view.
      */
@@ -140,12 +183,12 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mMainView.animate().setDuration(shortAnimTime).alpha(
+            mRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRecyclerView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -161,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -176,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_account) {
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            Intent i = new Intent(DetailHospitalActivity.this, LoginActivity.class);
             startActivity(i);
             finish();
         }
