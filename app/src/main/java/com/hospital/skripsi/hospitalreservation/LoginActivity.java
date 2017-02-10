@@ -30,6 +30,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.hospital.skripsi.hospitalreservation.utility.RequestServer;
+import com.hospital.skripsi.hospitalreservation.utility.Session;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,8 +200,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
+            String url = new RequestServer().getServer_url() + "login";
+            JsonObject jsonReq = new JsonObject();
+            jsonReq.addProperty("email", email);
+            jsonReq.addProperty("password", password);
+
+            Ion.with(LoginActivity.this)
+                    .load(url)
+                    .setJsonObjectBody(jsonReq)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            String status = result.get("status").toString();
+                            if (status.equals("1")){
+                                JsonObject data = result.getAsJsonObject("data");
+                                session.createLoginSession(data.get("user_id").getAsString(),data.get("name").getAsString(),data.get("address").getAsString());
+
+                                //TODO go to profile
+                                //code here...
+                            }
+                        }
+                    });
+
         }
     }
 

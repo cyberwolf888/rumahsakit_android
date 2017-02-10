@@ -30,10 +30,9 @@ public class Session {
     /**
      * Create login session
      * */
-    public void createLoginSession(String id_user, String fullname, String photo, String alamat){
+    public void createLoginSession(String id_user, String fullname, String alamat){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
-
         editor.putString(ID_USER, id_user);
         editor.putString(ID_NAME, fullname);
         editor.putString(ID_ALAMAT, alamat);
