@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new Session(LoginActivity.this);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -215,10 +217,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             String status = result.get("status").toString();
                             if (status.equals("1")){
                                 JsonObject data = result.getAsJsonObject("data");
-                                session.createLoginSession(data.get("user_id").getAsString(),data.get("name").getAsString(),data.get("address").getAsString());
-
-                                //TODO go to profile
-                                //code here...
+                                session.createLoginSession(data.get("user_id").getAsString(),data.get("name").getAsString());
+                                finish();
                             }
                         }
                     });

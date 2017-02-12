@@ -28,6 +28,7 @@ import com.google.gson.JsonObject;
 import com.hospital.skripsi.hospitalreservation.adapter.RoomAdapter;
 import com.hospital.skripsi.hospitalreservation.models.Room;
 import com.hospital.skripsi.hospitalreservation.utility.RequestServer;
+import com.hospital.skripsi.hospitalreservation.utility.Session;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -57,9 +58,12 @@ public class DetailHospitalActivity extends AppCompatActivity {
     private ImageView imageHospital;
     private TextView tvHospitalName,tvDescription,tvAdress,tvTelp,tvEmail;
 
+    private Session session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new Session(DetailHospitalActivity.this);
         id_hospital = getIntent().getStringExtra("id_hospital");
         hospital_name = getIntent().getStringExtra("hospital_name");
         telp = getIntent().getStringExtra("telp");
@@ -210,7 +214,11 @@ public class DetailHospitalActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if (session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.login, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
         return true;
     }
     @Override
@@ -218,9 +226,25 @@ public class DetailHospitalActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_account) {
-            Intent i = new Intent(DetailHospitalActivity.this, LoginActivity.class);
+
+        if (id == R.id.action_home) {
+            Intent i = new Intent(DetailHospitalActivity.this, MainActivity.class);
             startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_account) {
+            Intent i = new Intent(DetailHospitalActivity.this, MyProfileActivity.class);
+            startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_reservation) {
+            Intent i = new Intent(DetailHospitalActivity.this, MyReservationActivity.class);
+            startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_logout) {
+            session.logoutUser();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

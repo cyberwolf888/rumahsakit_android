@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.hospital.skripsi.hospitalreservation.adapter.HospitalAdapter;
 import com.hospital.skripsi.hospitalreservation.models.Hospital;
 import com.hospital.skripsi.hospitalreservation.utility.RequestServer;
+import com.hospital.skripsi.hospitalreservation.utility.Session;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -41,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private View mProgressView;
     private SwipeRefreshLayout mMainView;
 
+    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new Session(MainActivity.this);
         setContentView(R.layout.activity_main);
 
         mMainView = (SwipeRefreshLayout) findViewById(R.id.main_view);
@@ -167,7 +170,12 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if (session.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.login, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
+
         return true;
     }
     @Override
@@ -176,9 +184,25 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_account) {
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            Intent i = new Intent(MainActivity.this, MyProfileActivity.class);
             startActivity(i);
         }
+
+        if (id == R.id.action_account) {
+            Intent i = new Intent(MainActivity.this, MyProfileActivity.class);
+            startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_reservation) {
+            Intent i = new Intent(MainActivity.this, MyReservationActivity.class);
+            startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_logout) {
+            session.logoutUser();
+            finish();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

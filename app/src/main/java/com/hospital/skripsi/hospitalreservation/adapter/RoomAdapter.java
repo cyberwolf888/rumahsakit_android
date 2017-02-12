@@ -1,6 +1,7 @@
 package com.hospital.skripsi.hospitalreservation.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hospital.skripsi.hospitalreservation.R;
+import com.hospital.skripsi.hospitalreservation.ReservationActivity;
 import com.hospital.skripsi.hospitalreservation.models.Room;
 import com.koushikdutta.ion.Ion;
 
@@ -29,6 +31,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
         public RoomViewHolder(View itemView){
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Room feedItem = listItems.get(getAdapterPosition());
+                    Intent i = new Intent(mContext, ReservationActivity.class);
+                    i.putExtra("id_room",feedItem.id_room);
+                    mContext.startActivity(i);
+                }
+            });
 
             cv = (CardView)itemView.findViewById(R.id.cvRoom);
             tvRoomName = (TextView)itemView.findViewById(R.id.tvRoomName);

@@ -30,12 +30,11 @@ public class Session {
     /**
      * Create login session
      * */
-    public void createLoginSession(String id_user, String fullname, String alamat){
+    public void createLoginSession(String id_user, String fullname){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(ID_USER, id_user);
         editor.putString(ID_NAME, fullname);
-        editor.putString(ID_ALAMAT, alamat);
         editor.commit();
     }
 
@@ -60,8 +59,8 @@ public class Session {
         // Check login status
         if(!this.isLoggedIn()){
             Intent i = new Intent(_context, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             _context.startActivity(i);
             //((Activity)_context).finish();
         }
