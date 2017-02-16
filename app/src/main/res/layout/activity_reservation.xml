@@ -9,6 +9,7 @@
     tools:context="com.hospital.skripsi.hospitalreservation.ReservationActivity">
 
     <ScrollView
+        android:id="@+id/booking_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -45,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Total"
+                    android:text="Total/day"
                     android:layout_gravity="top|left"
                     android:textSize="23dp"
                     android:textStyle="bold"
@@ -109,9 +110,28 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <Button
+                    android:id="@+id/btnBook"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Book"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/main_progress"
+        android:layout_gravity="center_horizontal|center_vertical"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+         />
+
 </LinearLayout>
