@@ -28,11 +28,11 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".DetailHospitalActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ReservationActivity" />
-        <activity android:name=".MyReservationActivity" />
-        <activity android:name=".MyProfileActivity" />
-        <activity android:name=".InvoiceActivity"></activity>
+        <activity android:name=".RegisterActivity" android:label="Register"/>
+        <activity android:name=".ReservationActivity" android:label="Reservation"/>
+        <activity android:name=".MyReservationActivity" android:label="My Reservation"/>
+        <activity android:name=".MyProfileActivity" android:label="My Profile"/>
+        <activity android:name=".InvoiceActivity" android:label="Complete"/>
     </application>
 
 </manifest>

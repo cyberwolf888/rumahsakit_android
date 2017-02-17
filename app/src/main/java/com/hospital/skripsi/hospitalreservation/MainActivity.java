@@ -191,12 +191,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_account) {
             Intent i = new Intent(MainActivity.this, MyProfileActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.action_reservation) {
             Intent i = new Intent(MainActivity.this, MyReservationActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.action_logout) {
             session.logoutUser();
