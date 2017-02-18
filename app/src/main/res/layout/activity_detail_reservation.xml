@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_detail_reservation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context="com.hospital.skripsi.hospitalreservation.DetailReservationActivity">
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reservation Date"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCreated"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hospital Name"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvHospital"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Room Name"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRoom"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check-in Date"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCheckin"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check-out Date"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCheckout"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDuration"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTotal"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reservation Status"
+                android:layout_gravity="top|left"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvStatus"
+                android:text=""
+                android:textSize="20sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

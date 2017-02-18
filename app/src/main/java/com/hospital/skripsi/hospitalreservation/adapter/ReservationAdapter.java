@@ -1,6 +1,7 @@
 package com.hospital.skripsi.hospitalreservation.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hospital.skripsi.hospitalreservation.DetailReservationActivity;
 import com.hospital.skripsi.hospitalreservation.R;
 import com.hospital.skripsi.hospitalreservation.models.Reservation;
 import com.koushikdutta.ion.Ion;
@@ -29,6 +31,25 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
         public ReservationViewHolder(View itemView){
             super(itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Reservation feedItem = listItems.get(getAdapterPosition());
+                    Intent i = new Intent(mContext, DetailReservationActivity.class);
+                    i.putExtra("id_reservation",feedItem.id_reservation);
+                    i.putExtra("rumahsakit",feedItem.rumahsakit);
+                    i.putExtra("room",feedItem.room);
+                    i.putExtra("checkin",feedItem.checkin);
+                    i.putExtra("checkout",feedItem.checkout);
+                    i.putExtra("duration",feedItem.duration);
+                    i.putExtra("total",feedItem.total);
+                    i.putExtra("status",feedItem.status);
+                    i.putExtra("reservation_image",feedItem.reservation_image);
+                    i.putExtra("created",feedItem.created);
+                    mContext.startActivity(i);
+                }
+            });
 
             cv = (CardView)itemView.findViewById(R.id.cvReservation);
             tvHospitalName = (TextView)itemView.findViewById(R.id.tvHospitalName);
