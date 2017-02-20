@@ -3,10 +3,12 @@ package com.hospital.skripsi.hospitalreservation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -218,7 +220,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if (status.equals("1")){
                                 JsonObject data = result.getAsJsonObject("data");
                                 session.createLoginSession(data.get("user_id").getAsString(),data.get("name").getAsString());
-                                finish();
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                ComponentName cn = i.getComponent();
+                                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                                startActivity(mainIntent);
                             }
                         }
                     });
