@@ -45,7 +45,8 @@
             android:label="Complete" />
         <activity
             android:name=".DetailReservationActivity"
-            android:label="Detail Reservation"/>
+            android:label="Detail Reservation" />
+        <activity android:name=".DetailScheduleActivity"></activity>
     </application>
 
 </manifest>

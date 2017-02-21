@@ -88,6 +88,32 @@
                     android:layout_height="match_parent">
                 </android.support.v7.widget.RecyclerView>
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Docter Schedule"
+                    android:layout_gravity="top|left"
+                    android:textSize="23dp"
+                    android:textStyle="bold"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="5dp"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvDocter"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

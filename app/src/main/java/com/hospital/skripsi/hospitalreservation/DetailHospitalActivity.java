@@ -27,7 +27,9 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.hospital.skripsi.hospitalreservation.adapter.DocterAdapter;
 import com.hospital.skripsi.hospitalreservation.adapter.RoomAdapter;
+import com.hospital.skripsi.hospitalreservation.models.Docter;
 import com.hospital.skripsi.hospitalreservation.models.Room;
 import com.hospital.skripsi.hospitalreservation.utility.RequestServer;
 import com.hospital.skripsi.hospitalreservation.utility.Session;
@@ -52,10 +54,15 @@ public class DetailHospitalActivity extends AppCompatActivity {
 
     private View mProgressView;
     private List<Room> rooms;
+    private List<Docter> docters;
     protected RecyclerView mRecyclerView;
+    protected RecyclerView mDocterRecyclerView;
     protected RoomAdapter mAdapter;
+    protected DocterAdapter mDocterAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    protected RecyclerView.LayoutManager mDocterLayoutManager;
     public JsonArray data;
+    public JsonArray dataDocter;
 
     private ImageView imageHospital;
     private TextView tvHospitalName,tvDescription,tvAdress,tvTelp,tvEmail;
@@ -82,7 +89,9 @@ public class DetailHospitalActivity extends AppCompatActivity {
 
         mProgressView = findViewById(R.id.main_progress);
         mRecyclerView = (RecyclerView) findViewById(R.id.rvRoom);
+        mDocterRecyclerView = (RecyclerView) findViewById(R.id.rvDocter);
         mLayoutManager = new LinearLayoutManager(DetailHospitalActivity.this);
+        mDocterLayoutManager = new LinearLayoutManager(DetailHospitalActivity.this);
 
         imageHospital = (ImageView) findViewById(R.id.imageHospital);
         tvHospitalName = (TextView) findViewById(R.id.tvHospitalName);
@@ -127,6 +136,7 @@ public class DetailHospitalActivity extends AppCompatActivity {
 
             rooms = new ArrayList<>();
             data = new JsonArray();
+
             String url = new RequestServer().getServer_url() + "getRoom";
 
             JsonObject jsonReq = new JsonObject();
@@ -162,6 +172,39 @@ public class DetailHospitalActivity extends AppCompatActivity {
                             mRecyclerView.setLayoutManager(mLayoutManager);
 
                             showProgress(false);
+                        }
+                    });
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            docters = new ArrayList<>();
+            dataDocter = new JsonArray();
+
+            String urlDocter = new RequestServer().getServer_url() + "getDocter";
+
+            JsonObject jsonReqDocter = new JsonObject();
+            jsonReqDocter.addProperty("rumahsakit_id", id_hospital);
+            Log.d("jsonReqDocter",">"+jsonReqDocter);
+            Ion.with(DetailHospitalActivity.this)
+                    .load(urlDocter)
+                    .setJsonObjectBody(jsonReqDocter)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            Log.d("result",">"+result);
+                            dataDocter = result.getAsJsonArray("data");
+                            for (int i=0; i<dataDocter.size(); i++){
+                                JsonObject objData = dataDocter.get(i).getAsJsonObject();
+                                docters.add(new Docter(
+                                        objData.get("id").getAsString(),
+                                        objData.get("name").getAsString(),
+                                        objData.get("jenis").getAsString()
+                                ));
+                            }
+                            mDocterAdapter = new DocterAdapter(DetailHospitalActivity.this,docters);
+                            mDocterRecyclerView.setAdapter(mDocterAdapter);
+                            mDocterRecyclerView.setLayoutManager(mDocterLayoutManager);
                         }
                     });
 
