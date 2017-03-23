@@ -162,7 +162,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total"
+                android:text="Deposit"
                 android:layout_gravity="top|left"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"

@@ -148,11 +148,13 @@ public class ReservationActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        /*
         if (TextUtils.isEmpty(duration)) {
             etDuration.setError(getString(R.string.error_field_required));
             focusView = etDuration;
             cancel = true;
         }
+        */
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -168,7 +170,7 @@ public class ReservationActivity extends AppCompatActivity {
                 jsonReq.addProperty("user_id", session.getUserId());
                 jsonReq.addProperty("id_room", id_room);
                 jsonReq.addProperty("checkin", checkin);
-                jsonReq.addProperty("duration", duration);
+                jsonReq.addProperty("duration", 1);
                 Log.d("Data",">"+jsonReq);
                 Ion.with(ReservationActivity.this)
                         .load(url)
