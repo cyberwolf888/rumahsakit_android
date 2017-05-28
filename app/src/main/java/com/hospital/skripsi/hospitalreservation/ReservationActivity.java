@@ -209,11 +209,18 @@ public class ReservationActivity extends AppCompatActivity {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 String formatted = formater.format(newDate.getTime());
+
+                //bisa kapan saja
+                etCheckin.setText(formatted);
+
+                //harus 1 hari kedepan
+                /*
                 if(newDate.after(newCalendar)){
                     etCheckin.setText(formatted);
                 }else{
                     Toast.makeText(getApplicationContext(), "Min check-in date is 1 day forward.", Toast.LENGTH_LONG).show();
                 }
+                */
 
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
