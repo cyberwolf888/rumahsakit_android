@@ -36,7 +36,7 @@ import java.util.Calendar;
 public class ReservationActivity extends AppCompatActivity {
     private DatePickerDialog dp_checkin;
     private EditText etCheckin,etDuration;
-    private TextView tvTotal,tvDescription;
+    private TextView tvTotalRoom,tvTotal,tvDescription;
     private Button btnBook;
     private ImageView imageRoom;
     private String id_room;
@@ -65,6 +65,7 @@ public class ReservationActivity extends AppCompatActivity {
         etCheckin = (EditText)findViewById(R.id.etCheckin);
         etDuration = (EditText)findViewById(R.id.etDuration);
 
+        tvTotalRoom = (TextView)findViewById(R.id.tvTotalRoom);
         tvTotal = (TextView)findViewById(R.id.tvTotal);
         tvDescription = (TextView)findViewById(R.id.tvDescription);
 
@@ -115,6 +116,7 @@ public class ReservationActivity extends AppCompatActivity {
                             JsonObject data = result.getAsJsonObject("data");
                             tvDescription.setText(data.get("description").getAsString());
                             tvTotal.setText(data.get("label_price").getAsString());
+                            tvTotalRoom.setText(data.get("total_room").getAsString());
 
                             Ion.with(ReservationActivity.this).load(data.get("image").getAsString()).withBitmap().asBitmap().setCallback(new FutureCallback<Bitmap>() {
                                 @Override
